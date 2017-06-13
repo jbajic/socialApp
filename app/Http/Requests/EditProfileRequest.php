@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EditProfileRequest extends Request
 {
@@ -15,7 +16,11 @@ class EditProfileRequest extends Request
      */
     public function authorize()
     {
-        return true;
+        if(Auth::check()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

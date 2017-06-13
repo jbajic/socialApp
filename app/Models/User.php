@@ -62,7 +62,7 @@ class User extends Model implements AuthenticatableContract
 
     public function getFirstNameOrUsername()
     {
-        return $this->username ?: $this->username;
+        return $this->username ? $this->username : $this->firstname . $this->lastname;
     }
 
     public function getAvatarUrl()

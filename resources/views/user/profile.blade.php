@@ -16,9 +16,16 @@
 					    <div class="media-body">
 					        <h4 class="media-heading"><a href="{{ route('profile', $status->user->id) }}">{{ $status->user->getNameOrUsername() }}</a></h4>
 					        <p>{{ $status->body }}</p>
-					        <ul class="list-inline">
+					        <ul class="list-inline status">
 					            <li>{{ $status->created_at->diffForHumans() }}</li>
-					            <li>{{ $status->likes->count() }} {{ str_plural('like', $status->likes->count()) }}</li>
+								@if( $status->user->id !== Auth::user()->id )
+									@if($status->liked)
+										<li><i class="fa fa-thumbs-up blueIcon likeUnlike" data-param="{{ $status->id }}"></i></li>
+									@else
+										<li><i class="fa fa-thumbs-up blackIcon likeUnlike" data-param="{{ $status->id }}"></i></li>
+									@endif
+								@endif
+					            <li><span id="statusCount{{ $status->id }}">{{ $status->likes->count() }}</span> {{ str_plural('like', $status->likes->count()) }}</li>
 					        </ul>
 					 
 					 		@foreach( $status->replies as $reply )
@@ -32,9 +39,13 @@
 						                <ul class="list-inline">
 						                    <li>{{ $reply->created_at->diffForHumans() }}</li>
 						                    @if( $reply->user->id !== Auth::user()->id )
-							                    <li><a href="{{ route('status.like', $reply->id) }}">Like</a></li>
+												@if($reply->liked)
+													<li><i class="fa fa-thumbs-up blueIcon likeUnlike" data-param="{{ $reply->id }}"></i></li>
+												@else
+													<li><i class="fa fa-thumbs-up blackIcon likeUnlike" data-param="{{ $reply->id }}"></i></li>
+												@endif
 							             	@endif
-						                    <li>{{ $reply->likes->count() }} {{ str_plural('like', $reply->likes->count()) }}</li>
+						                    <li><span id="replyCount{{ $reply->id }}">{{ $reply->likes->count() }}</span> {{ str_plural('like', $reply->likes->count()) }}</li>
 						                </ul>
 						            </div>
 						        </div>

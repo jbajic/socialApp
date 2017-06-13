@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class FriendController extends Controller
 {
@@ -15,14 +15,12 @@ class FriendController extends Controller
    public function index()
    {
         $friends = Auth::user()->friends();
-        $isFriend = Auth::user()->isFriendWith($user);
+//        $isFriend = Auth::user()->isFriendWith($user);
         $name = Auth::user()->getFirstNameOrUsername();
-        $requests = Auth::user()->friendRequest();
-        $hasRequestPending = Auth::user()->hasFriendRequestsPending($user);
+        $requests = Auth::user()->friendRequests();
+//        $hasRequestPending = Auth::user()->hasFriendRequestsPending($user);
 
-        return view('friends.index', array('friends' => $friends, 'name' => $name,
-        									'requests' => $requests, 'hasRequestPending' => $hasRequestPending,
-        									'isFriend' => $isFriend));
+        return view('friends.index', array('friends' => $friends, 'name' => $name, 'requests' => $requests));
    }
 
    public function addFriend($id)

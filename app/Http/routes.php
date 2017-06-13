@@ -49,6 +49,8 @@ Route::group(['middleware' => 'auth'], function(){
 
 	Route::get('/search', array('uses' => 'SearchController@getResults', 'as' => 'search.results'));
 
+	Route::post('/search', array('uses' => 'SearchController@getResultsAjax'));
+
 
 /**
 
@@ -93,7 +95,11 @@ Route::group(['middleware' => 'auth'], function(){
 
 	Route::post('/status/{id}/reply', array('uses' => 'StatusController@postReply', 'as' => 'status.reply.post'));
 
-	Route::get('status/{id}/like', array('uses' => 'StatusController@getLike', 'as' => 'status.like'));
+//	Route::get('status/{id}/like', array('uses' => 'StatusController@getLike', 'as' => 'status.like'));
+
+	Route::post('status/like', array('uses' => 'StatusController@likeComment'));
+
+	Route::post('status/unlike', array('uses' => 'StatusController@unlikeComment'));
 
 });
 
